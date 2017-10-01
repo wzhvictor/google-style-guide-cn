@@ -1,10 +1,3 @@
-title: Google编码规范：Python
-categories: Backend
-keywords: python, style guide, google
-date: 2016-02-26 14:05:12
-tags: [编码规范, python, Google]
----
-
 # Python Language Rules
 
 ## Lint
