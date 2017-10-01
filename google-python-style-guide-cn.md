@@ -16,11 +16,11 @@
 
 在import中不要使用相对名称，应该使用package的全名。例如：
 
-    ```python
-    from sound.effects import echo
-    ...
-    echo.EchoFilter(input, output, delay=0.7, atten=4)
-    ```
+```python
+from sound.effects import echo
+...
+echo.EchoFilter(input, output, delay=0.7, atten=4)
+```
 
 ## Packages
 
@@ -30,13 +30,13 @@
 
 例如：
 
-    ```python
-    # Reference in code with complete name.
-    import sound.effects.echo
+```python
+# Reference in code with complete name.
+import sound.effects.echo
 
-    # Reference in code with just module name (preferred).
-    from sound.effects import echo
-    ```
+# Reference in code with just module name (preferred).
+from sound.effects import echo
+```
 
 ## Exceptions
 
@@ -49,10 +49,10 @@
 + module或package应该定义自己的exception基类，该基类应该继承`Exception`类。
 例如：
 
-    ```python
-    class Error(Exception):
-        pass;
-    ```
+```python
+class Error(Exception):
+    pass;
+```
 
 + 不要使用捕获所有异常(catch-all)的形式，如`except: `, 或`except Exception: `, 以及`except StandardError`等，除非将异常重新抛出，或者当前处于线程的最外层。否则所有的异常（比如拼写错误、单元测试错误、Ctrl+C中断等）都会被捕获。
 + 尽量简化`try/except`中的代码块，代码越多，发生错误的概率就越大，而真正的错误很可能被忽略了。
@@ -61,12 +61,12 @@
 
 例如：
 
-    ```python
-    try:
-        raise Error
-    except Error as error:
-        pass
-    ```    
+```python
+try:
+    raise Error
+except Error as error:
+    pass
+```    
 
 ## Global Variables
 
@@ -94,42 +94,42 @@ class可以定义在method/function/class中，function可以定义在method/fun
 
 Yes:
 
-    ```python
-    result = []
-      for x in range(10):
-          for y in range(5):
-              if x * y > 10:
-                  result.append((x, y))
+```python
+result = []
+    for x in range(10):
+        for y in range(5):
+            if x * y > 10:
+                result.append((x, y))
 
-      for x in xrange(5):
-          for y in xrange(5):
-              if x != y:
-                  for z in xrange(5):
-                      if y != z:
-                          yield (x, y, z)
+    for x in xrange(5):
+        for y in xrange(5):
+            if x != y:
+                for z in xrange(5):
+                    if y != z:
+                        yield (x, y, z)
 
-      return ((x, complicated_transform(x))
-              for x in long_generator_function(parameter)
-              if x is not None)
+    return ((x, complicated_transform(x))
+            for x in long_generator_function(parameter)
+            if x is not None)
 
-      squares = [x * x for x in range(10)]
+    squares = [x * x for x in range(10)]
 
-      eat(jelly_bean for jelly_bean in jelly_beans
-          if jelly_bean.color == 'black')
-    ```
+    eat(jelly_bean for jelly_bean in jelly_beans
+        if jelly_bean.color == 'black')
+```
 
 No:
 
-    ```python
-    result = [(x, y) for x in range(10) for y in range(5) if x * y > 10]
+```python
+result = [(x, y) for x in range(10) for y in range(5) if x * y > 10]
 
-    return ((x, y, z)
-          for x in xrange(5)
-          for y in xrange(5)
-          if x != y
-          for z in xrange(5)
-          if y != z)
-    ```
+return ((x, y, z)
+        for x in xrange(5)
+        for y in xrange(5)
+        if x != y
+        for z in xrange(5)
+        if y != z)
+```
 
 ## Default Iterators and Operators
 
@@ -139,21 +139,21 @@ No:
 
 Yes:
 
-    ```python
-    for key in adict: ...
-    if key not in adict: ...
-    if obj in alist: ...
-    for line in afile: ...
-    for k, v in dict.iteritems(): ...
-    ```
+```python
+for key in adict: ...
+if key not in adict: ...
+if obj in alist: ...
+for line in afile: ...
+for k, v in dict.iteritems(): ...
+```
 
 No:
 
-    ```python
-    for key in adict.keys(): ...
-    if not adict.has_key(key): ...
-    for line in afile.readlines(): ...
-    ```
+```python
+for key in adict.keys(): ...
+if not adict.has_key(key): ...
+for line in afile.readlines(): ...
+```
 
 ## Generators
 
@@ -184,22 +184,22 @@ Lambda表达式就是匿名函数，一般作为`map()`/`filter()`等高阶函�
 
 Yes:
 
-    ```python
-    def foo(a, b=None):
-             if b is None:
-                 b = []
-    ```
+```python
+def foo(a, b=None):
+            if b is None:
+                b = []
+```
 
 No:
 
-    ```
-    No:  def foo(a, b=[]):
-             ...
-    No:  def foo(a, b=time.time()):  # The time the module was loaded???
-             ...
-    No:  def foo(a, b=FLAGS.my_thing):  # sys.argv has not yet been parsed...
-             ...
-    ```
+```python
+No:  def foo(a, b=[]):
+            ...
+No:  def foo(a, b=time.time()):  # The time the module was loaded???
+            ...
+No:  def foo(a, b=FLAGS.my_thing):  # sys.argv has not yet been parsed...
+            ...
+```
 
 ## True/False evaluations
 
@@ -218,29 +218,29 @@ No:
 
 Yes:
 
-    ```python
-    if not users:
-         print 'no users'
+```python
+if not users:
+        print 'no users'
 
-    if foo == 0:
-         self.handle_zero()
+if foo == 0:
+        self.handle_zero()
 
-    if i % 10 == 0:
-         self.handle_multiple_of_ten()
-    ```
+if i % 10 == 0:
+        self.handle_multiple_of_ten()
+```
 
 No:
 
-    ```python
-    if len(users) == 0:
-         print 'no users'
+```python
+if len(users) == 0:
+        print 'no users'
 
-    if foo is not None and not foo:
-         self.handle_zero()
+if foo is not None and not foo:
+        self.handle_zero()
 
-    if not i % 10:
-         self.handle_multiple_of_ten()
-    ```
+if not i % 10:
+        self.handle_multiple_of_ten()
+```
 
 ## Threading
 
@@ -267,37 +267,37 @@ No:
 
 Yes:
 
-    ```python
-    foo_bar(self, width, height, color='black', design=None, x='foo',
-            emphasis=None, highlight=0)
+```python
+foo_bar(self, width, height, color='black', design=None, x='foo',
+        emphasis=None, highlight=0)
 
-     if (width == 0 and height == 0 and
-         color == 'red' and emphasis == 'strong'):
-    ```
+    if (width == 0 and height == 0 and
+        color == 'red' and emphasis == 'strong'):
+```
 
 如果字符串太长，一行容不下，使用括号进行隐式连接：
 
-    ```python
-    x = ('This will build a very long long '
-         'long long long long long long string')
-    ```
+```python
+x = ('This will build a very long long '
+        'long long long long long long string')
+```
 
 在注释中，URL始终在一行显示：
 
 Yes:  
 
-    ```python
-    # See details at
-    # http://www.example.com/us/developer/documentation/api/content/v2.0/csv_file_name_extension_full_specification.html
-    ```
+```python
+# See details at
+# http://www.example.com/us/developer/documentation/api/content/v2.0/csv_file_name_extension_full_specification.html
+```
 
 No:
 
-    ```python
-    # See details at
-    # http://www.example.com/us/developer/documentation/api/content/\
-    # v2.0/csv_file_name_extension_full_specification.html
-    ```
+```python
+# See details at
+# http://www.example.com/us/developer/documentation/api/content/\
+# v2.0/csv_file_name_extension_full_specification.html
+```
 
 ## Parentheses
 
@@ -308,28 +308,28 @@ tuple用括号是可以的。
 
 Yes:
 
-    ```python
-    if foo:
-        bar()
-    while x:
-        x = bar()
-    if x and y:
-        bar()
-    if not x:
-        bar()
-    return foo
-    for (x, y) in dict.items(): ...
-    ```
+```python
+if foo:
+    bar()
+while x:
+    x = bar()
+if x and y:
+    bar()
+if not x:
+    bar()
+return foo
+for (x, y) in dict.items(): ...
+```
 
 No:
 
-    ```python
-    if (x):
-        bar()
-    if not(x):
-        bar()
-    return (foo)
-    ```
+```python
+if (x):
+    bar()
+if not(x):
+    bar()
+return (foo)
+```
 
 ## Indentation
 
@@ -340,50 +340,50 @@ No:
 
 Yes:   
 
-    ```python
-    # Aligned with opening delimiter
-    foo = long_function_name(var_one, var_two,
-                             var_three, var_four)
+```python
+# Aligned with opening delimiter
+foo = long_function_name(var_one, var_two,
+                            var_three, var_four)
 
-    # Aligned with opening delimiter in a dictionary
-    foo = {
-        long_dictionary_key: value1 +
-                             value2,
-        ...
-    }
+# Aligned with opening delimiter in a dictionary
+foo = {
+    long_dictionary_key: value1 +
+                            value2,
+    ...
+}
 
-    # 4-space hanging indent; nothing on first line
-    foo = long_function_name(
-        var_one, var_two, var_three,
-        var_four)
+# 4-space hanging indent; nothing on first line
+foo = long_function_name(
+    var_one, var_two, var_three,
+    var_four)
 
-    # 4-space hanging indent in a dictionary
-    foo = {
-        long_dictionary_key:
-            long_dictionary_value,
-        ...
-    }
-    ```
+# 4-space hanging indent in a dictionary
+foo = {
+    long_dictionary_key:
+        long_dictionary_value,
+    ...
+}
+```
 
 No:
 
-    ```python
-    # Stuff on first line forbidden
-    foo = long_function_name(var_one, var_two,
-        var_three, var_four)
+```python
+# Stuff on first line forbidden
+foo = long_function_name(var_one, var_two,
+    var_three, var_four)
 
-    # 2-space hanging indent forbidden
-    foo = long_function_name(
-        var_one, var_two, var_three,
-        var_four)
+# 2-space hanging indent forbidden
+foo = long_function_name(
+    var_one, var_two, var_three,
+    var_four)
 
-    # No hanging indent in a dictionary
-    foo = {
-        long_dictionary_key:
-            long_dictionary_value,
-            ...
-    }
-    ```
+# No hanging indent in a dictionary
+foo = {
+    long_dictionary_key:
+        long_dictionary_value,
+        ...
+}
+```
 
 ## Blank Lines
 
@@ -400,113 +400,113 @@ method之间，以及class与第一个method之间，空一行。
 
 Yes:
 
-    ```python
-    spam(ham[1], {eggs: 2}, [])
-    ```
+```python
+spam(ham[1], {eggs: 2}, [])
+```
 
 No:  
 
-    ```python
-    spam( ham[ 1 ], { eggs: 2 }, [ ] )
-    ```
+```python
+spam( ham[ 1 ], { eggs: 2 }, [ ] )
+```
 
 逗号，分号和冒号前面没有空格。除非是在一行的末尾，否则逗号、分号和冒号的后面需要使用空格：
 
 Yes:
 
-    ```python
-    if x == 4:
-        print x, y
-     x, y = y, x
-    ```
+```python
+if x == 4:
+    print x, y
+    x, y = y, x
+```
 
 No:  
 
-    ```python
-    if x == 4 :
-        print x , y
-    x , y = y , x
-    ```
+```python
+if x == 4 :
+    print x , y
+x , y = y , x
+```
 
 作为参数列表或下标索引的小括号()和中括号[]的前面不要使用空格：
 
 Yes:
 
-    ```python
-    spam(1)
-    ```
+```python
+spam(1)
+```
 
 No:  
 
-    ```python
-    spam (1)
-    ```
+```python
+spam (1)
+```
 
 Yes:
 
-    ```python
-    dict['key'] = list[index]
-    ```
+```python
+dict['key'] = list[index]
+```
 
 No:  
 
-    ```python
-    dict ['key'] = list [index]
-    ```
+```python
+dict ['key'] = list [index]
+```
 
 二元操作符(`==, >, < !=, <>, <=, >=, in, not in, is, is not, and, or, not`)的前后各使用一个空格：
 
 Yes:
 
-    ```python
-    x == 1
-    ```
+```python
+x == 1
+```
 
 No:  
 
-    ```python
-    x<1
-    ```
+```python
+x<1
+```
 
 `=`用于参数默认值时，前后不要使用空格：
 
 Yes:
 
-    ```python
-    def complex(real, imag=0.0): return magic(r=real, i=imag)
-    ```
+```python
+def complex(real, imag=0.0): return magic(r=real, i=imag)
+```
 
 No:  
 
-    ```python
-    def complex(real, imag = 0.0): return magic(r = real, i = imag)
-    ```
+```python
+def complex(real, imag = 0.0): return magic(r = real, i = imag)
+```
 
 对于连续的行，不要通过空格去垂直对齐(主要是`=`和`#`):
 
 Yes:
 
-    ```python
-    foo = 1000  # comment
-    long_name = 2  # comment that should not be aligned
+```python
+foo = 1000  # comment
+long_name = 2  # comment that should not be aligned
 
-    dictionary = {
-      'foo': 1,
-      'long_name': 2,
-    }
-    ```
+dictionary = {
+    'foo': 1,
+    'long_name': 2,
+}
+```
 
 No:
 
-    ```python
-    foo       = 1000  # comment
-    long_name = 2     # comment that should not be aligned
+```python
+foo       = 1000  # comment
+long_name = 2     # comment that should not be aligned
 
-    dictionary = {
-        'foo'      : 1,
-        'long_name': 2,
-    }
-    ```
+dictionary = {
+    'foo'      : 1,
+    'long_name': 2,
+}
+```
 
 ## Shebang Line
 
@@ -540,83 +540,83 @@ function的docstring分为不同的section：`Args`, `Returns`, `Raises`，secti
 
 `Raises`: 列出所有的异常；
 
-    ```python
-    def fetch_bigtable_rows(big_table, keys, other_silly_variable=None):
-        """Fetches rows from a Bigtable.
+```python
+def fetch_bigtable_rows(big_table, keys, other_silly_variable=None):
+    """Fetches rows from a Bigtable.
 
-        Retrieves rows pertaining to the given keys from the Table instance
-        represented by big_table.  Silly things may happen if
-        other_silly_variable is not None.
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by big_table.  Silly things may happen if
+    other_silly_variable is not None.
 
-        Args:
-            big_table: An open Bigtable Table instance.
-            keys: A sequence of strings representing the key of each table row
-                to fetch.
-            other_silly_variable: Another optional variable, that has a much
-                longer name than the other args, and which does nothing.
+    Args:
+        big_table: An open Bigtable Table instance.
+        keys: A sequence of strings representing the key of each table row
+            to fetch.
+        other_silly_variable: Another optional variable, that has a much
+            longer name than the other args, and which does nothing.
 
-        Returns:
-            A dict mapping keys to the corresponding table row data
-            fetched. Each row is represented as a tuple of strings. For
-            example:
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
 
-            {'Serak': ('Rigel VII', 'Preparer'),
-             'Zim': ('Irk', 'Invader'),
-             'Lrrr': ('Omicron Persei 8', 'Emperor')}
+        {'Serak': ('Rigel VII', 'Preparer'),
+            'Zim': ('Irk', 'Invader'),
+            'Lrrr': ('Omicron Persei 8', 'Emperor')}
 
-            If a key from the keys argument is missing from the dictionary,
-            then that row was not found in the table.
+        If a key from the keys argument is missing from the dictionary,
+        then that row was not found in the table.
 
-        Raises:
-            IOError: An error occurred accessing the bigtable.Table object.
-        """
-        pass
-    ```
+    Raises:
+        IOError: An error occurred accessing the bigtable.Table object.
+    """
+    pass
+```
 
 + Classes
 
 docstring应该位于class的定义下面，如果class包含public的属性，使用`Attributes`依次列出，格式和函数参数相同。
 
-    ```python
-    class SampleClass(object):
-        """Summary of class here.
+```python
+class SampleClass(object):
+    """Summary of class here.
 
-        Longer class information....
-        Longer class information....
+    Longer class information....
+    Longer class information....
 
-        Attributes:
-            likes_spam: A boolean indicating if we like SPAM or not.
-            eggs: An integer count of the eggs we have laid.
-        """
+    Attributes:
+        likes_spam: A boolean indicating if we like SPAM or not.
+        eggs: An integer count of the eggs we have laid.
+    """
 
-        def __init__(self, likes_spam=False):
-            """Inits SampleClass with blah."""
-            self.likes_spam = likes_spam
-            self.eggs = 0
+    def __init__(self, likes_spam=False):
+        """Inits SampleClass with blah."""
+        self.likes_spam = likes_spam
+        self.eggs = 0
 
-        def public_method(self):
-            """Performs operation blah."""
-    ```
+    def public_method(self):
+        """Performs operation blah."""
+```
 
 + Block and Inline Comments
 
 对于复杂的逻辑，注释应该在逻辑的上面单独说明，对于简单但不明显的逻辑，注释放在代码的行末，但是与代码至少有2个空格的间距。
 
-    ```python
-    # We use a weighted dictionary search to find out where i is in
-    # the array.  We extrapolate position based on the largest num
-    # in the array and the array size and then do binary search to
-    # get the exact number.
+```python
+# We use a weighted dictionary search to find out where i is in
+# the array.  We extrapolate position based on the largest num
+# in the array and the array size and then do binary search to
+# get the exact number.
 
-    if i & (i-1) == 0:        # true iff i is a power of 2
-    ```
+if i & (i-1) == 0:        # true iff i is a power of 2
+```
 
 永远不要试图描述你的代码。要假设阅读代码的人比你更懂Python：
 
-    ```python
-    # BAD COMMENT: Now go through the b array and make sure whenever i occurs
-    # the next element is i+1
-    ```
+```python
+# BAD COMMENT: Now go through the b array and make sure whenever i occurs
+# the next element is i+1
+```
 
 ## Classes
 
@@ -626,33 +626,33 @@ docstring应该位于class的定义下面，如果class包含public的属性，�
 
 Yes:
 
-    ```python
-    class SampleClass(object):
-         pass
-
-
-    class OuterClass(object):
-
-        class InnerClass(object):
-            pass
-
-
-    class ChildClass(ParentClass):
-    """Explicitly inherits from another class already."""
-    ```
-
-No:
-
-    ```python
-    class SampleClass:
+```python
+class SampleClass(object):
         pass
 
 
-    class OuterClass:
+class OuterClass(object):
 
-        class InnerClass:
-            pass
-    ```
+    class InnerClass(object):
+        pass
+
+
+class ChildClass(ParentClass):
+"""Explicitly inherits from another class already."""
+```
+
+No:
+
+```python
+class SampleClass:
+    pass
+
+
+class OuterClass:
+
+    class InnerClass:
+        pass
+```
 
 ## Strings
 
@@ -660,61 +660,61 @@ No:
 
 Yes:    
 
-    ```python
-    x = a + b
-    x = '%s, %s!' % (imperative, expletive)
-    x = '{}, {}!'.format(imperative, expletive)
-    x = 'name: %s; score: %d' % (name, n)
-    x = 'name: {}; score: {}'.format(name, n)
-    ```
+```python
+x = a + b
+x = '%s, %s!' % (imperative, expletive)
+x = '{}, {}!'.format(imperative, expletive)
+x = 'name: %s; score: %d' % (name, n)
+x = 'name: {}; score: {}'.format(name, n)
+```
 
 No:
 
-    ```python
-    x = '%s%s' % (a, b)  # use + in this case
-    x = '{}{}'.format(a, b)  # use + in this case
-    x = imperative + ', ' + expletive + '!'
-    x = 'name: ' + name + '; score: ' + str(n)
-    ```
+```python
+x = '%s%s' % (a, b)  # use + in this case
+x = '{}{}'.format(a, b)  # use + in this case
+x = imperative + ', ' + expletive + '!'
+x = 'name: ' + name + '; score: ' + str(n)
+```
 
 不要使用`+`和`+=`在循环中拼接字符串。因为字符串是不可变的，这样会创建很多不必要的临时对象，导致运行时间是乘方级的，而不是线性的。更好地做法应该是，循环将各个字串放到list中，循环结束后通过`''.join()`连接：
 
 Yes:
 
-    ```python
-    items = ['<table>']
-    for last_name, first_name in employee_list:
-        items.append('<tr><td>%s, %s</td></tr>' % (last_name, first_name))
-        items.append('</table>')
-    employee_table = ''.join(items)
-    ```
+```python
+items = ['<table>']
+for last_name, first_name in employee_list:
+    items.append('<tr><td>%s, %s</td></tr>' % (last_name, first_name))
+    items.append('</table>')
+employee_table = ''.join(items)
+```
 
 No:
 
-    ```python
-    employee_table = '<table>'
-    for last_name, first_name in employee_list:
-        employee_table += '<tr><td>%s, %s</td></tr>' % (last_name, first_name)
-    employee_table += '</table>'
-    ```
+```python
+employee_table = '<table>'
+for last_name, first_name in employee_list:
+    employee_table += '<tr><td>%s, %s</td></tr>' % (last_name, first_name)
+employee_table += '</table>'
+```
 
 在同一个文件中，对于字符串引号的使用要保持一致。使用`''`或`""`都可以，保持一致即可。两者可以同时使用，避免通过`\`转义。
 
 Yes:
 
-    ```python
-    Python('Why are you hiding your eyes?')
-    Gollum("I'm scared of lint errors.")
-    Narrator('"Good!" thought a happy Python reviewer.')
-    ```
+```python
+Python('Why are you hiding your eyes?')
+Gollum("I'm scared of lint errors.")
+Narrator('"Good!" thought a happy Python reviewer.')
+```
 
 No:
 
-    ```python
-    Python("Why are you hiding your eyes?")
-    Gollum('The lint. It burns. It burns us.')
-    Gollum("Always the great lint. Watching. Watching.")
-    ```
+```python
+Python("Why are you hiding your eyes?")
+Gollum('The lint. It burns. It burns us.')
+Gollum("Always the great lint. Watching. Watching.")
+```
 
 如果string占多行，建议使用`"""`，而不是`'''`。
 当且仅当字符串使用`''`表示，多行字符串可以使用`'''`表示。
@@ -723,18 +723,18 @@ docstring总是使用`"""`，无论什么情况下。
 
 Yes:
 
-    ```python
-    print ("This is much nicer.\n"
-           "Do it this way.\n")
-    ```
+```python
+print ("This is much nicer.\n"
+        "Do it this way.\n")
+```
 
 No:
 
-    ```python
-        print """This is pretty ugly.
-    Don't do this.
-    """
-    ```
+```python
+    print """This is pretty ugly.
+Don't do this.
+"""
+```
 
 ## Files and Sockets
 
@@ -753,22 +753,22 @@ No:
 
 推荐使用`with`语句操作file：
 
-    ```python
-    with open("hello.txt") as hello_file:
-        for line in hello_file:
-            print line
-    ```
+```python
+with open("hello.txt") as hello_file:
+    for line in hello_file:
+        print line
+```
 
 对于不支持`with`的类似对象，可以使用`contextlib.closing()`:
 
-    ```python
-    import contextlib
+```python
+import contextlib
 
-    with contextlib.closing(urllib.urlopen("http://www.python.org/")) as
-        front_page:
-        for line in front_page:
-            print line
-    ```
+with contextlib.closing(urllib.urlopen("http://www.python.org/")) as
+    front_page:
+    for line in front_page:
+        print line
+```
 
 ## TODO Comments
 
@@ -778,10 +778,10 @@ No:
 释表示TODO的内容。
 TODO的用户并不一定是fix这个问题的人，所以这里的用户几乎都是自己。
 
-    ```python
-    # TODO(kl@gmail.com): Use a "*" here for string repetition.
-    # TODO(Zeke) Change this to use relations.
-    ```
+```python
+# TODO(kl@gmail.com): Use a "*" here for string repetition.
+# TODO(Zeke) Change this to use relations.
+```
 
 如果`TODO`表示的是“在将来的某个时间点修复”，则务必包含具体的日期(`2009年11月前修复`)或事件
 (`当所有的客户端都可以处理XML结果时删除这段代码`)。
@@ -792,16 +792,16 @@ TODO的用户并不一定是fix这个问题的人，所以这里的用户几乎�
 
 Yes:
 
-    ```python
-    import os
-    import sys
-    ```
+```python
+import os
+import sys
+```
 
 No:
 
-    ```python
-    import os, sys
-    ```
+```python
+import os, sys
+```
 
 import总是位于文件的顶部，在module的注释和docstring的后面，而在module的全局变量和常量的前面。
 import应该根据通用性进行分组：
@@ -812,13 +812,13 @@ import应该根据通用性进行分组：
 
 在每一个分组中，import应该根据module的全包名按照字母序排列：
 
-    ```python
-    import foo
-    from foo import bar
-    from foo.bar import baz
-    from foo.bar import Quux
-    from Foob import ar
-    ```
+```python
+import foo
+from foo import bar
+from foo.bar import baz
+from foo.bar import Quux
+from Foob import ar
+```
 
 ## Statements
 
@@ -829,23 +829,23 @@ import应该根据通用性进行分组：
 
 Yes:
 
-    ```python
-    if foo: bar(foo)
-    ```
+```python
+if foo: bar(foo)
+```
 
 No:
 
-    ```python
-    if foo: bar(foo)
-    else:   baz(foo)
+```python
+if foo: bar(foo)
+else:   baz(foo)
 
-    try:               bar(foo)
-    except ValueError: baz(foo)
+try:               bar(foo)
+except ValueError: baz(foo)
 
-    try:
-        bar(foo)
-    except ValueError: baz(foo)
-    ```
+try:
+    bar(foo)
+except ValueError: baz(foo)
+```
 
 ## Naming
 
@@ -889,13 +889,13 @@ Python之父Guido推荐的命名规范：
 
 `pydoc`和单元测试都需要import文件，所以文件中应该总是添加`if __name__ == '__main__'`确保当module被import的时候，不会执行其主功能。
 
-    ```python
-    def main():
-        ...
+```python
+def main():
+    ...
 
-    if __name__ == '__main__':
-        main()
-    ```
+if __name__ == '__main__':
+    main()
+```
 
 在module被import的时候，所有顶层(top-level)的代码都会被执行。
 
